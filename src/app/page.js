@@ -13,17 +13,14 @@ export default function MyComponent() {
     console.log("Submitting prompt:", prompt);
 
     try {
-      const response = await fetch(
-        "https://chatbotserver-sandy.vercel.app/" && "http://localhost:9000",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          mode: "cors",
-          body: JSON.stringify({ prompt }), // Using prompt directly
-        }
-      );
+      const response = await fetch("https://chatbotserver-sandy.vercel.app/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+        body: JSON.stringify({ prompt }), // Using prompt directly
+      });
 
       if (response.ok) {
         const responseData = await response.json();
@@ -41,16 +38,13 @@ export default function MyComponent() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
-        "http://localhost:9000" && "https://chatbotserver-sandy.vercel.app/",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          mode: "cors",
-        }
-      );
+      const response = await fetch("https://chatbotserver-sandy.vercel.app/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      });
 
       if (response.ok) {
         const responseData = await response.json();
