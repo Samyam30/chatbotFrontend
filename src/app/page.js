@@ -5,56 +5,62 @@ import Header from "./components/Header/page";
 
 export default function MyComponent() {
   const [data, setData] = useState([]);
-  const [prompt, setPrompt] = useState('');
-  const [loading,setLoading]=useState(false);
+  const [prompt, setPrompt] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Submitting prompt:", prompt);
 
     try {
-      const response = await fetch("http://localhost:5000", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: 'cors',
-        body: JSON.stringify({ prompt }) // Using prompt directly
-      });
+      const response = await fetch(
+        "https://chatbotserver-sandy.vercel.app/" && "http://localhost:9000",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "cors",
+          body: JSON.stringify({ prompt }), // Using prompt directly
+        }
+      );
 
       if (response.ok) {
         const responseData = await response.json();
         console.log("Received response:", responseData);
         setData([...data, { prompt: prompt, response: responseData.response }]);
-        setPrompt('');
+        setPrompt("");
       } else {
-        console.error('Failed to submit prompt');
+        console.error("Failed to submit prompt");
       }
     } catch (error) {
-      console.error('Error submitting prompt:', error);
+      console.error("Error submitting prompt:", error);
     }
   };
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: 'cors'
-      });
+      const response = await fetch(
+        "http://localhost:9000" && "https://chatbotserver-sandy.vercel.app/",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "cors",
+        }
+      );
 
       if (response.ok) {
         const responseData = await response.json();
         console.log("Fetched data:", responseData);
         setData(responseData); // Correctly set fetched data
       } else {
-        console.error('Failed to fetch data');
+        console.error("Failed to fetch data");
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -139,9 +145,8 @@ export default function MyComponent() {
             </div>
           </div>
           <div className="flex flex-col overflow-y-scroll overflow-x-scroll">
-            {loading? <p>Loading..</p>:null}
+            {loading ? <p>Loading..</p> : null}
             <Chatbox data={data} prompt={prompt} loading={loading} />
-            
           </div>
         </div>
         <form onSubmit={handleSubmit} className="formm">
